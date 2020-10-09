@@ -8,8 +8,18 @@
 
 import UIKit
 
-struct Key {
-    let type: ActionType
+protocol KeyDelegate: class {
+    func keyUpdate(_ key: Key)
+}
+
+class Key {
+    weak var delegate: KeyDelegate?
+
+    var type: ActionType {
+        didSet {
+            delegate?.keyUpdate(self)
+        }
+    }
 
     init(type: ActionType) {
         self.type = type
@@ -23,8 +33,8 @@ struct Key {
             return String(value)
         case .floatPoint:
             return ","
-        case .clear:
-            return "C"
+        case .clear(let current):
+            return current ? "C" : "АC"
         case .percent:
             return "%"
         case .changeSign:

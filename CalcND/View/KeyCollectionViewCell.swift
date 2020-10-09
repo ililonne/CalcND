@@ -28,6 +28,7 @@ class KeyCollectionViewCell: UICollectionViewCell {
     }
 
     func update(key: Key, cornerRadius: CGFloat) {
+        key.delegate = self
         textLabel.text = key.text
         textLabel.textColor = key.textColor
         circleView.backgroundColor = key.color
@@ -39,5 +40,11 @@ class KeyCollectionViewCell: UICollectionViewCell {
         else {
             textLabel.textAlignment = .center
         }
+    }
+}
+
+extension KeyCollectionViewCell: KeyDelegate {
+    func keyUpdate(_ key: Key) {
+        textLabel.text = key.text
     }
 }
